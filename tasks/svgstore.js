@@ -45,7 +45,9 @@ module.exports = function (grunt) {
       },
       formatting: false,
       includedemo: false,
+      includeViewBox: true,
       includeTitle: true,
+      includeDesc: true,
       insertIntoDefs: false,
       forceClosePaths: false,
       symbol: {}
@@ -138,9 +140,6 @@ module.exports = function (grunt) {
 
         var id = convertNameToId(filename);
 
-        // If there is no title use the filename
-        title = title || id;
-
         // Generate symbol
         var $res = cheerio.load('<symbol>' + $svg.html() + '</symbol>', { lowerCaseAttributeNames: false });
         var $symbol = $res('symbol').first();
@@ -151,20 +150,27 @@ module.exports = function (grunt) {
         }
 
         // Add title and desc (if provided)
-        if (desc) {
-          $symbol.prepend('<desc>' + desc + '</desc>');
+        if (options.includeDesc) {
+          if (desc) {
+            $symbol.prepend('<desc>' + desc + '</desc>');
+          }
         }
 
         if (options.includeTitle) {
+          // If there is no title use the filename
+          title = title || id;
+
           if (title) {
             $symbol.prepend('<title>' + title + '</title>');
           }
         }
 
         // Add viewBox (if present of SVG)
-        var viewBox = $svg.attr('viewBox');
-        if (viewBox) {
-          $symbol.attr('viewBox', viewBox);
+        if (options.includeViewBox) {
+          var viewBox = $svg.attr('viewBox');
+          if (viewBox) {
+            $symbol.attr('viewBox', viewBox);
+          }
         }
 
         // Add ID to symbol
