@@ -103,6 +103,12 @@ Default value: `false`
 
 Clean up all inline style definitions that may jeopardise later stylesheet-based colouring (`fill`).
 
+#### options.includetitle (since 0.2.8)
+Type: `boolean`
+Default value: `false`
+
+Whether or not to include the `title` tag in every `<symbol>`.
+
 ### Usage Examples
 
 This example will merge all elements from the `svgs` folder into the `<defs>`-Block of the `dest.svg`. You can use that SVG in HTML like:
@@ -132,6 +138,9 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+#### 0.2.8
+  * Add `options.includetitle` to toggle inclusion of `title` tags for each `<symbol>`.
 
 #### 0.2.7
   * Don't generate IDs that start with a number by prefixing them with `svgstore`. (Thanks to [#38](https://github.com/FWeinb/grunt-svgstore/pull/38))

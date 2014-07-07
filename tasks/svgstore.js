@@ -39,10 +39,13 @@ module.exports = function (grunt) {
     var options = this.options({
       prefix: '',
       svg: {
-          'xmlns': "http://www.w3.org/2000/svg"
+          "version": "1.1",
+          "xmlns": "http://www.w3.org/2000/svg",
+          "xmlns:xlink": "http://www.w3.org/1999/xlink"
       },
       formatting: false,
       includedemo: false,
+      includetitle: false,
       symbol: {}
     });
 
@@ -146,8 +149,10 @@ module.exports = function (grunt) {
           $symbol.prepend('<desc>' + desc + '</desc>');
         }
 
-        if (title) {
-          $symbol.prepend('<title>' + title + '</title>');
+        if (options.includetitle) {
+          if (title) {
+            $symbol.prepend('<title>' + title + '</title>');
+          }
         }
 
         // Add viewBox (if present of SVG)
