@@ -103,11 +103,23 @@ Default value: `false`
 
 Clean up all inline style definitions that may jeopardise later stylesheet-based colouring (`fill`).
 
-#### options.includetitle (since 0.2.8)
+#### options.includeTitle (since 0.2.8)
+Type: `boolean`
+Default value: `true`
+
+Whether or not to include the `title` tag in every `<symbol>`.
+
+#### options.insertIntoDefs (since 0.2.8)
 Type: `boolean`
 Default value: `false`
 
-Whether or not to include the `title` tag in every `<symbol>`.
+Put all of the `<symbol>`s inside one large `<defs>` block (for loading as sprites and later usage with `<use>` blocks).
+
+#### options.forceClosePaths (since 0.2.8)
+Type: `boolean`
+Default value: `false`
+
+Make sure that every `<path>` has a matching closing tag (otherwise IE gives errors for unclosed tags).
 
 ### Usage Examples
 

@@ -36,7 +36,7 @@ module.exports = function (grunt) {
 
   grunt.registerMultiTask('svgstore', 'Merge SVGs from a folder.', function () {
     // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
+    var defaultOpts = {
       prefix: '',
       svg: {
           "version": "1.1",
@@ -45,14 +45,20 @@ module.exports = function (grunt) {
       },
       formatting: false,
       includedemo: false,
-      includetitle: false,
+      includeTitle: true,
+      insertIntoDefs: false,
+      forceClosePaths: false,
       symbol: {}
-    });
+    };
+    var taskOpts = grunt.config([this.name, 'options']) || {};
+    var targetOpts = grunt.config([this.name, this.target, 'options']) || {};
+    var options = grunt.util._.merge({}, defaultOpts, taskOpts, targetOpts);
 
     this.files.forEach(function (file) {
       var $resultDocument = cheerio.load('<svg><defs></defs></svg>', { lowerCaseAttributeNames : false }),
           $resultSvg = $resultDocument('svg'),
           $resultDefs = $resultDocument('defs').first(),
+          $svgContainer = (options.insertIntoDefs) ? $resultDefs : $resultSvg,
           iconNameViewBoxArray = [];  // Used to store information of all icons that are added
                                       // { name : '' }
 
@@ -149,7 +155,7 @@ module.exports = function (grunt) {
           $symbol.prepend('<desc>' + desc + '</desc>');
         }
 
-        if (options.includetitle) {
+        if (options.includeTitle) {
           if (title) {
             $symbol.prepend('<title>' + title + '</title>');
           }
@@ -166,7 +172,7 @@ module.exports = function (grunt) {
         $symbol.attr('id', graphicId);
 
         // Append <symbol> to resulting SVG
-        $resultSvg.append($res.html());
+        $svgContainer.append($res.html());
 
         // Add icon to the demo.html array
         if (options.includedemo) {
@@ -181,7 +187,8 @@ module.exports = function (grunt) {
         $resultDefs.remove();
       }
 
-      var result = options.formatting ? beautify($resultDocument.xml(), options.formatting) : $resultDocument.xml();
+      var resultXML = (options.forceClosePaths) ? $resultDocument.xml().replace(/<path [^>]+>/g, '$&</path>') : $resultDocument.xml();
+      var result = options.formatting ? beautify(resultXML, options.formatting) : resultXML;
       var destName = path.basename(file.dest, '.svg');
 
       grunt.file.write(file.dest, result);
