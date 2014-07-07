@@ -45,11 +45,11 @@ module.exports = function (grunt) {
       },
       formatting: false,
       includedemo: false,
-      includeViewBox: true,
-      includeTitle: true,
-      includeDesc: true,
-      insertIntoDefs: false,
       forceClosePaths: false,
+      includeDesc: true,
+      includeTitle: true,
+      includeViewBox: true,
+      insertIntoDefs: false,
       symbol: {}
     };
     var taskOpts = grunt.config([this.name, 'options']) || {};

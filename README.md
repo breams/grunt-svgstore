@@ -103,31 +103,31 @@ Default value: `false`
 
 Clean up all inline style definitions that may jeopardise later stylesheet-based colouring (`fill`).
 
-#### options.forceClosePaths (since 0.2.8)
+#### options.forceClosePaths (since 0.2.7.1)
 Type: `boolean`
 Default value: `false`
 
 Make sure that every `<path>` has a matching closing tag (otherwise IE gives errors for unclosed tags).
 
-#### options.includeDesc (since 0.2.8)
+#### options.includeDesc (since 0.2.7.1)
 Type: `boolean`
 Default value: `true`
 
 Include the `desc` tag when generating `<symbol>`s.
 
-#### options.includeTitle (since 0.2.8)
+#### options.includeTitle (since 0.2.7.1)
 Type: `boolean`
 Default value: `true`
 
-Include the `title` tag in every `<symbol>`.
+Include the `title` tag when generating `<symbol>`s.
 
-#### options.includeViewBox (since 0.2.8)
+#### options.includeViewBox (since 0.2.7.1)
 Type: `boolean`
 Default value: `true`
 
-Include the viewBox when generating `<symbol>`s.
+Include the `viewBox` when generating `<symbol>`s.
 
-#### options.insertIntoDefs (since 0.2.8)
+#### options.insertIntoDefs (since 0.2.7.1)
 Type: `boolean`
 Default value: `false`
 
@@ -163,8 +163,12 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
-#### 0.2.8
-  * Add `options.includetitle` to toggle inclusion of `title` tags for each `<symbol>`.
+#### 0.2.7.1
+* Add `options.forceClosePaths` to make sure that every `<path>` has a matching closing tag.
+* Add `options.includeDesc` to toggle inclusion of `desc` tag when generating `<symbol>`s.
+* Add `options.includeTitle` to toggle inclusion of `title` tag when generating `<symbol>`s.
+* Add `options.includeViewBox` to toggle inclusion of `viewBox` when generating `<symbol>`s.
+* Add `options.insertIntoDefs` to toggle putting all of the `<symbol>`s inside one large `<defs>` block.
 
 #### 0.2.7
   * Don't generate IDs that start with a number by prefixing them with `svgstore`. (Thanks to [#38](https://github.com/FWeinb/grunt-svgstore/pull/38))
