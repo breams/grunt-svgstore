@@ -103,31 +103,31 @@ Default value: `false`
 
 Clean up all inline style definitions that may jeopardise later stylesheet-based colouring (`fill`).
 
-#### options.forceCloseTags (since 0.2.7.1)
+#### options.forceCloseTags (since 0.2.7-1)
 Type: `array`
 Default value: `[]`
 
 Provide an array of tag names (eg. `['path', 'use']`) that require a closing tag (may be required for IE compatibility).
 
-#### options.includeDesc (since 0.2.7.1)
+#### options.includeDesc (since 0.2.7-1)
 Type: `boolean`
 Default value: `true`
 
 Include the `desc` tag when generating `<symbol>`s.
 
-#### options.includeTitle (since 0.2.7.1)
+#### options.includeTitle (since 0.2.7-1)
 Type: `boolean`
 Default value: `true`
 
 Include the `title` tag when generating `<symbol>`s.
 
-#### options.includeViewBox (since 0.2.7.1)
+#### options.includeViewBox (since 0.2.7-1)
 Type: `boolean`
 Default value: `true`
 
 Include the `viewBox` when generating `<symbol>`s.
 
-#### options.insertIntoDefs (since 0.2.7.1)
+#### options.insertIntoDefs (since 0.2.7-1)
 Type: `boolean`
 Default value: `false`
 
@@ -163,7 +163,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
-#### 0.2.7.1
+#### 0.2.7-1
 * Add `options.forceCloseTags` to provide an array of tag names that require a closing tag.
 * Add `options.includeDesc` to toggle inclusion of `desc` tag when generating `<symbol>`s.
 * Add `options.includeTitle` to toggle inclusion of `title` tag when generating `<symbol>`s.
