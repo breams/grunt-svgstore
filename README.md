@@ -103,11 +103,11 @@ Default value: `false`
 
 Clean up all inline style definitions that may jeopardise later stylesheet-based colouring (`fill`).
 
-#### options.forceClosePaths (since 0.2.7.1)
-Type: `boolean`
-Default value: `false`
+#### options.forceCloseTags (since 0.2.7.1)
+Type: `array`
+Default value: `[]`
 
-Make sure that every `<path>` has a matching closing tag (otherwise IE gives errors for unclosed tags).
+Provide an array of tag names (eg. `['path', 'use']`) that require a closing tag (may be required for IE compatibility).
 
 #### options.includeDesc (since 0.2.7.1)
 Type: `boolean`
@@ -164,7 +164,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 ## Release History
 
 #### 0.2.7.1
-* Add `options.forceClosePaths` to make sure that every `<path>` has a matching closing tag.
+* Add `options.forceCloseTags` to provide an array of tag names that require a closing tag.
 * Add `options.includeDesc` to toggle inclusion of `desc` tag when generating `<symbol>`s.
 * Add `options.includeTitle` to toggle inclusion of `title` tag when generating `<symbol>`s.
 * Add `options.includeViewBox` to toggle inclusion of `viewBox` when generating `<symbol>`s.

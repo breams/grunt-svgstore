@@ -45,7 +45,7 @@ module.exports = function (grunt) {
       },
       formatting: false,
       includedemo: false,
-      forceClosePaths: false,
+      forceCloseTags: [],
       includeDesc: true,
       includeTitle: true,
       includeViewBox: true,
@@ -193,7 +193,12 @@ module.exports = function (grunt) {
         $resultDefs.remove();
       }
 
-      var resultXML = (options.forceClosePaths) ? $resultDocument.xml().replace(/<path [^>]+>/g, '$&</path>') : $resultDocument.xml();
+      var resultXML = $resultDocument.xml();
+      // Process any tags flagged for closing
+      for (var i = 0, len = options.forceCloseTags.length; i < len; i++) {
+        var re = new RegExp("<(" + options.forceCloseTags[i] + ") ([^>]+)\/>", "g");
+        resultXML = resultXML.replace(re, "<$1 $2></$1>");
+      }
       var result = options.formatting ? beautify(resultXML, options.formatting) : resultXML;
       var destName = path.basename(file.dest, '.svg');
 
