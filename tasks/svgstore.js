@@ -141,7 +141,25 @@ module.exports = function (grunt) {
         var id = convertNameToId(filename);
 
         // Generate symbol
-        var $res = cheerio.load('<symbol>' + $svg.html() + '</symbol>', { lowerCaseAttributeNames: false });
+
+        // If svg has <g> children wrapping paths
+        $svg.children('g').each(function() {
+          var $this = $(this);
+          $this.replaceWith($this.children());
+        });
+
+        // var svgHtml = $svg.html().replace(/("[^"\t\r\n]+[\t\r\n]+|[\t\r\n]+[^"\t\r\n]+"|[\t\r\n]+[^"\t\r\n<>=]+)/gm, function($0, $1, $2) {
+        //   if ($1) {
+        //     return $1.replace(/[\r\n\t]+/g, "");
+        //   }
+        //   return $0;
+        // }).trim();
+
+        // var svgHtml = $svg.html().replace(/("[^"\t\r\n]+)[\t\r\n]+|[\t\r\n]+([^"\t\r\n<>=]+)|[\t\r\n]+([^"\t\r\n]+")/gm, "$1$2$3").trim();
+
+        var svgHtml = $svg.html().replace(/\r\n|\r|\n|\t/gm, "").trim();
+
+        var $res = cheerio.load('<symbol>' + svgHtml + '</symbol>', { lowerCaseAttributeNames: false });
         var $symbol = $res('symbol').first();
 
         // Merge in symbol attributes from option
