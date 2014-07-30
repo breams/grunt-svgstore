@@ -133,6 +133,32 @@ Default value: `false`
 
 Put all of the `<symbol>`s inside one large `<defs>` block (for loading as sprites and later usage with `<use>` blocks).
 
+#### options.demoLocation (since 0.2.7-2)
+Type: `string`
+Default value: `""`
+
+Path for the generated demo (defaults to same path as generated files).
+
+#### options.demoTemplate (since 0.2.7-2)
+Type: `string`
+Default value: `""`
+
+An external file to be used for demo template HTML.
+
+#### options.demoTitle (since 0.2.7-2)
+Type: `string`
+Default value: `""`
+
+Text for the demo page's `title` and `h1` (if included in the template).
+
+#### options.demoFormatting (since 0.2.7-2)
+Type: `Object` or `boolean`
+Default value: `false`
+
+Formatting options for beautifying the generated demo HTML (same syntax as [options.formatting](#options.formatting) )
+
+See [js-beautify](https://github.com/einars/js-beautify) for full options.
+
 ### Usage Examples
 
 This example will merge all elements from the `svgs` folder into the `<defs>`-Block of the `dest.svg`. You can use that SVG in HTML like:
@@ -162,6 +188,12 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+#### 0.2.7-2
+* Add `options.demoLocation` to provide a path for the generated demo.
+* Add `options.demoTemplate` to specify an external file for demo template HTML.
+* Add `options.demoTitle` to provide text for the demo page's `title` and `h1` (if included in the template).
+* Add `options.demoFormatting` to include formatting options for beautifying the generated demo HTML.
 
 #### 0.2.7-1
 * Add `options.forceCloseTags` to provide an array of tag names that require a closing tag.
