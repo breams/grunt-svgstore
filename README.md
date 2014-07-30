@@ -155,9 +155,9 @@ Text for the demo page's `title` and `h1` (if included in the template).
 Type: `Object` or `boolean`
 Default value: `false`
 
-Formatting options for beautifying the generated demo HTML (same syntax as [options.formatting](#options.formatting) )
+Formatting options for beautifying the generated demo HTML (same syntax as [options.formatting](#optionsformatting-since-004) )
 
-See [js-beautify](https://github.com/einars/js-beautify) for full options.
+See [js-beautify](https://github.com/einars/js-beautify#css--html) for full options.
 
 ### Usage Examples
 
