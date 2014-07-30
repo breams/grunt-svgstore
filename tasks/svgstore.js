@@ -50,6 +50,10 @@ module.exports = function (grunt) {
       includeTitle: true,
       includeViewBox: true,
       insertIntoDefs: false,
+      demoLocation: "",
+      demoTemplate: "",
+      demoTitle: "",
+      demoFormatting: false,
       symbol: {}
     };
     var taskOpts = grunt.config([this.name, 'options']) || {};
@@ -148,15 +152,6 @@ module.exports = function (grunt) {
           $this.replaceWith($this.children());
         });
 
-        // var svgHtml = $svg.html().replace(/("[^"\t\r\n]+[\t\r\n]+|[\t\r\n]+[^"\t\r\n]+"|[\t\r\n]+[^"\t\r\n<>=]+)/gm, function($0, $1, $2) {
-        //   if ($1) {
-        //     return $1.replace(/[\r\n\t]+/g, "");
-        //   }
-        //   return $0;
-        // }).trim();
-
-        // var svgHtml = $svg.html().replace(/("[^"\t\r\n]+)[\t\r\n]+|[\t\r\n]+([^"\t\r\n<>=]+)|[\t\r\n]+([^"\t\r\n]+")/gm, "$1$2$3").trim();
-
         var svgHtml = $svg.html().replace(/\r\n|\r|\n|\t/gm, "").trim();
 
         var $res = cheerio.load('<symbol>' + svgHtml + '</symbol>', { lowerCaseAttributeNames: false });
@@ -217,17 +212,17 @@ module.exports = function (grunt) {
         var re = new RegExp("<(" + options.forceCloseTags[i] + ") ([^>]+)\/>", "g");
         resultXML = resultXML.replace(re, "<$1 $2></$1>");
       }
-      var result = options.formatting ? beautify(resultXML, options.formatting) : resultXML;
+      resultXML = options.formatting ? beautify(resultXML, options.formatting) : resultXML;
       var destName = path.basename(file.dest, '.svg');
 
-      grunt.file.write(file.dest, result);
+      grunt.file.write(file.dest, resultXML);
 
       grunt.log.writeln('File ' + chalk.cyan(file.dest) + ' created.');
 
       if (options.includedemo) {
         $resultSvg.attr('style', 'width:0;height:0;visibility:hidden;');
 
-        var demoHTML = multiline.stripIndent(function () { /*
+        var demoHTML = (options.demoTemplate && grunt.file.isFile(options.demoTemplate)) ? grunt.file.read(options.demoTemplate) : multiline.stripIndent(function () { /*
                 <!doctype html>
                 <html>
                   <head>
@@ -248,13 +243,23 @@ module.exports = function (grunt) {
 
         var useBlock = '';
         iconNameViewBoxArray.forEach(function (item) {
-          useBlock += '\t\t<svg>\n\t\t\t<use xlink:href="#' + item.name + '"></use>\n\t\t</svg>\n';
+          useBlock += '<svg class="' + item.name + '"><use xlink:href="#' + item.name + '"></use></svg>\n';
         });
 
-        demoHTML = demoHTML.replace('{{svg}}', $resultDocument.xml());
+        demoHTML = demoHTML.replace('{{svg}}', resultXML);
         demoHTML = demoHTML.replace('{{useBlock}}', useBlock);
+        demoHTML = demoHTML.replace(/{{svgFilename}}/g, destName);
+        demoHTML = demoHTML.replace(/{{title}}/g, (options.demoTitle) ? options.demoTitle : destName.charAt(0).toUpperCase() + destName.substr(1) + " Demo");
 
-        var demoPath = path.resolve(path.dirname(file.dest), destName + '-demo.html');
+        if (options.demoFormatting) {
+          demoHTML = beautify(demoHTML, options.demoFormatting);
+        }
+        var demoPath = '';
+        if (options.demoLocation) {
+          demoPath = path.resolve(options.demoLocation, destName + '.html');
+        } else {
+          demoPath = path.resolve(path.dirname(file.dest), destName + '-demo.html');
+        }
         grunt.file.write(demoPath, demoHTML);
         grunt.log.writeln('Demo file ' + chalk.cyan(demoPath) + ' created.');
       }
